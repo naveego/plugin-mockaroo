@@ -1,0 +1,80 @@
+{
+  "id": "plugin-mockaroo",
+  "displayName": "Mockaroo",
+  "description": "Publisher which connects to Mockaroo",
+  "apiVersion": "2",
+  "versionDescription": "Version 2",
+  "version": "1.0.0",
+  "iconFile": "icon.png",
+  "executable": "PluginMockaroo",
+  "kind": "publisher",
+  "os": "$GOOS",
+  "arch": "$GOARCH",
+  "accessGroups": [],
+  "canProduceMultipleSchemas": true,
+  "canAcceptQueryBasedSchemas": false,
+  "canUseOAuth": false,
+  "canConfigureWrite": false,
+  "canWrite": false,
+  "canConfigureReplication": false,
+  "canWriteReplication": false,
+  "querySchema": {
+    "ui": {
+      "ui:widget": "code",
+      "ui:options": {
+        "language": "sql"
+      }
+    },
+    "schema": {
+      "type": "string"
+    }
+  },
+  "configSchema": {
+    "ui": {
+      "ui:order": [
+        "ApiKey",
+        "MockSchemas"
+      ],
+      "ApiKey": {
+        "ui:widget": "password"
+      }
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "ApiKey" : {
+          "type": "string",
+          "title": "API Key",
+          "description": "The Mockaroo API Key."
+        },
+        "MockSchemas": {
+          "type": "array",
+          "title": "Mock Schemas",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "title": "Name",
+                "description": "The name of a saved Mockaroo schema."
+              },
+              "Count": {
+                "type": "number",
+                "title": "Name",
+                "description": "The count of records to return.",
+                "default": 100
+              }
+            },
+            "required": [
+              "Name",
+              "Count"
+            ]
+          }
+        }
+      },
+      "required": [
+        "ApiKey"
+      ]
+    }
+  }
+}
