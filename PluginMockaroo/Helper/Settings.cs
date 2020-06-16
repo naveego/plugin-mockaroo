@@ -27,7 +27,17 @@ namespace PluginMockaroo.Helper
                     {
                         if (string.IsNullOrWhiteSpace(mockSchema.Name))
                         {
-                            throw new Exception($"The Name property must be set on mock schema {MockSchemas.IndexOf(mockSchema)}");
+                            throw new Exception($"The Name property must be set on mock schema #{MockSchemas.IndexOf(mockSchema) + 1}");
+                        }
+
+                        if (mockSchema.Count > 5000)
+                        {
+                            throw new Exception($"The Count property must not exceed 5000 on mock schema #{MockSchemas.IndexOf(mockSchema) + 1}");
+                        }
+                        
+                        if (mockSchema.Count <= 0)
+                        {
+                            throw new Exception($"The Count property must be greater than 0 on mock schema #{MockSchemas.IndexOf(mockSchema) + 1}");
                         }
                     }
                 }
@@ -39,5 +49,6 @@ namespace PluginMockaroo.Helper
     {
         public string Name { get; set; }
         public int Count { get; set; }
+        public string CustomName { get; set; }
     }
 }

@@ -91,7 +91,55 @@ namespace PluginMockarooTest.Helper
             Exception e = Assert.Throws<Exception>(() => settings.Validate());
 
             // assert
-            Assert.Contains("The Name property must be set on mock schema 0", e.Message);
+            Assert.Contains("The Name property must be set on mock schema #1", e.Message);
+        }
+        
+        [Fact]
+        public void ValidateMockSchemaCountLowTest()
+        {
+            // setup
+            var settings = new Settings
+            {
+                ApiKey = "APIKEY",
+                MockSchemas = new List<MockSchema>
+                {
+                    new MockSchema
+                    {
+                        Name = "Name",
+                        Count = -1
+                    }
+                }
+            };
+
+            // act
+            Exception e = Assert.Throws<Exception>(() => settings.Validate());
+
+            // assert
+            Assert.Contains("The Count property must be greater than 0 on mock schema #1", e.Message);
+        }
+        
+        [Fact]
+        public void ValidateMockSchemaCountHighTest()
+        {
+            // setup
+            var settings = new Settings
+            {
+                ApiKey = "APIKEY",
+                MockSchemas = new List<MockSchema>
+                {
+                    new MockSchema
+                    {
+                        Name = "Name",
+                        Count = 10000
+                    }
+                }
+            };
+
+            // act
+            Exception e = Assert.Throws<Exception>(() => settings.Validate());
+
+            // assert
+            Assert.Contains("The Count property must not exceed 5000 on mock schema #1", e.Message);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace PluginMockaroo.API.Discover
                 // base schema to be added to
                 var schema = new Schema
                 {
-                    Id = mockSchema.Name,
-                    Name = mockSchema.Name,
+                    Id = string.IsNullOrWhiteSpace(mockSchema.CustomName) ? mockSchema.Name : mockSchema.CustomName,
+                    Name = string.IsNullOrWhiteSpace(mockSchema.CustomName) ? mockSchema.Name : mockSchema.CustomName,
                     Description = "",
                     PublisherMetaJson = JsonConvert.SerializeObject(mockSchema),
                     DataFlowDirection = Schema.Types.DataFlowDirection.Read

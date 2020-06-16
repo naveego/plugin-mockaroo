@@ -60,9 +60,14 @@
               },
               "Count": {
                 "type": "number",
-                "title": "Name",
+                "title": "Count",
                 "description": "The count of records to return.",
                 "default": 100
+              },
+              "CustomName": {
+                "type": "string",
+                "title": "Custom Name",
+                "description": "A custom name for the discovered Naveego schema."
               }
             },
             "required": [
