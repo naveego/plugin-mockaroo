@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Grpc.Core;
+using Naveego.Sdk.Logging;
 using Naveego.Sdk.Plugins;
 using PluginMockaroo.Helper;
 
@@ -12,6 +13,9 @@ namespace PluginMockaroo
         {
             try
             {
+                //setup logger
+                Logger.Init();
+                
                 // Add final chance exception handler
                 AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
                 {
