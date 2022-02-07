@@ -12,18 +12,32 @@ namespace PluginMockaroo.API.Read
         public static async IAsyncEnumerable<Record> ReadRecordsAsync(IApiClient apiClient, Schema schema)
         {
             var mockSchema = JsonConvert.DeserializeObject<MockSchema>(schema.PublisherMetaJson);
-            var path = $"generate.json?array=true&count={mockSchema.Count}&schema={mockSchema.Name}";
-            var response = await apiClient.PostAsync(path, null);
-
-            var recordsList = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(await response.Content.ReadAsStringAsync());
-
-            foreach (var recordMap in recordsList)
+            var pullCount = 500;
+            var currentCount = 0;
+            var totalCount = mockSchema.Count;
+            
+            while (currentCount < totalCount)
             {
-                yield return new Record
+                if (totalCount - currentCount < 500)
                 {
-                    Action = Record.Types.Action.Upsert,
-                    DataJson = JsonConvert.SerializeObject(recordMap)
-                };
+                    pullCount = totalCount - currentCount;
+                }
+                
+                var path = $"generate.json?array=true&count={pullCount}&schema={mockSchema.Name}";
+                var response = await apiClient.PostAsync(path, null);
+
+                var recordsList = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(await response.Content.ReadAsStringAsync());
+
+                foreach (var recordMap in recordsList)
+                {
+                    yield return new Record
+                    {
+                        Action = Record.Types.Action.Upsert,
+                        DataJson = JsonConvert.SerializeObject(recordMap)
+                    };
+                }
+
+                currentCount += pullCount;
             }
         }
     }

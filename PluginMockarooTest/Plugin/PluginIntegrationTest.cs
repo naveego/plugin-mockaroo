@@ -17,7 +17,7 @@ namespace PluginMockarooTest.Plugin
         {
             return new Settings
             {
-                ApiKey = "12645060",
+                ApiKey = "",
                 MockSchemas = new List<MockSchema>
                 {
                     new MockSchema
