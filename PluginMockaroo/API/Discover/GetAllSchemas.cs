@@ -45,7 +45,7 @@ namespace PluginMockaroo.API.Discover
 
         private static async Task<Schema> GetSchemaForMockSchema(IApiClient apiClient, Schema schema, MockSchema mockSchema)
         {
-            var path = $"generate.json?array=true&count={10}&schema={mockSchema.Name}";
+            var path = $"generate.json?array=true&count={10}&schema={mockSchema.Name}&include_nulls=true";
             var response = await apiClient.PostAsync(path, null);
 
             var recordsList = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(await response.Content.ReadAsStringAsync());

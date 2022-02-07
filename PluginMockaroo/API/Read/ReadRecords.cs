@@ -23,7 +23,7 @@ namespace PluginMockaroo.API.Read
                     pullCount = totalCount - currentCount;
                 }
                 
-                var path = $"generate.json?array=true&count={pullCount}&schema={mockSchema.Name}";
+                var path = $"generate.json?array=true&count={pullCount}&schema={mockSchema.Name}&include_nulls=true";
                 var response = await apiClient.PostAsync(path, null);
 
                 var recordsList = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(await response.Content.ReadAsStringAsync());
